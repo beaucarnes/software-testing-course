@@ -43,30 +43,6 @@ test.describe('Mocking API Responses', () => {
     await expect(productCards).toHaveCount(6, { timeout: 10000 });
   });
 
-  test('should display out-of-stock correctly', async ({ page }) => {
-    // Return products where one has zero stock
-    await page.route('**/api/products*', route => {
-      route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify([
-          { id: 1, name: 'Wireless Headphones', price: 79.99, category: 'electronics', image: 'headphones.svg', stock: 0 },
-          { id: 2, name: 'Mechanical Keyboard', price: 129.99, category: 'electronics', image: 'keyboard.svg', stock: 8 }
-        ])
-      });
-    });
-    
-    await page.goto('/');
-    
-    // Should display 2 products
-    const productCards = page.locator('.product-card');
-    await expect(productCards).toHaveCount(2);
-    
-    // First product should show out of stock indicator
-    const firstProduct = productCards.first();
-    await expect(firstProduct.locator('.product-stock')).toContainText(/out of stock|0/i);
-  });
-
   test('should handle add-to-cart failure', async ({ page }) => {
     await page.goto('/');
     
@@ -107,4 +83,35 @@ test.describe('Mocking API Responses', () => {
     await expect(productCards).toHaveCount(0);
   });
 
+  // runExtraChallengeTests(test)
 });
+
+/**
+ * Runs additional tests for research and extra challenge purpose
+ * @param {typeof import('@playwright/test').test} test - Playwright test object
+ */
+function runExtraChallengeTests(test) {
+  test('should display out-of-stock correctly', async ({ page }) => {  // Takes more than 5+ seconds
+    // Return products where one has zero stock
+    await page.route('**/api/products*', route => {
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify([
+          { id: 1, name: 'Wireless Headphones', price: 79.99, category: 'electronics', image: 'headphones.svg', stock: 0 },
+          { id: 2, name: 'Mechanical Keyboard', price: 129.99, category: 'electronics', image: 'keyboard.svg', stock: 8 }
+        ])
+      });
+    });
+
+    await page.goto('/');
+
+    // Should display 2 products
+    const productCards = page.locator('.product-card');
+    await expect(productCards).toHaveCount(2);
+
+    // First product should show out of stock indicator
+    const firstProduct = productCards.first();
+    await expect(firstProduct.locator('.product-stock')).toContainText(/out of stock|0/i);
+  });
+}

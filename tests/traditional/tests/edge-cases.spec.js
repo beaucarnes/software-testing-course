@@ -88,30 +88,6 @@ test.describe('Edge Cases', () => {
     await expect(cartCount).toHaveText('3');
   });
 
-  test('should not allow checkout with empty cart', async ({ page }) => {
-    // Go directly to checkout with empty cart
-    await page.goto('/checkout.html');
-    
-    // Fill out the form
-    await page.locator('#firstName').fill('Test');
-    await page.locator('#lastName').fill('User');
-    await page.locator('#address').fill('123 Test St');
-    await page.locator('#city').fill('Testville');
-    await page.locator('#state').selectOption('MI');
-    await page.locator('#zip').fill('49501');
-    await page.locator('#phone').fill('555-0000');
-    await page.locator('#cardName').fill('Test User');
-    await page.locator('#cardNumber').fill('4111111111111111');
-    await page.locator('#expiry').fill('12/28');
-    await page.locator('#cvv').fill('123');
-    
-    await page.locator('#placeOrderBtn').click();
-    
-    // Should show error about empty cart
-    const toast = page.locator('#toast');
-    await expect(toast).toBeVisible();
-  });
-
   // --- FORM VALIDATION EDGE CASES ---
 
   test('should require all fields for registration', async ({ page }) => {
@@ -123,21 +99,6 @@ test.describe('Edge Cases', () => {
     
     // Should stay on register page (validation prevents submit)
     await expect(page).toHaveURL(/register/);
-  });
-
-  test('should reject duplicate email registration', async ({ page }) => {
-    await page.goto('/register.html');
-    
-    // Try to register with the demo account email
-    await page.locator('#name').fill('Another User');
-    await page.locator('#email').fill('demo@techmart.com');
-    await page.locator('#password').fill('password123');
-    await page.locator('button[type="submit"]').click();
-    
-    // Should show error about existing email
-    const errorMessage = page.locator('#errorMessage');
-    await expect(errorMessage).toBeVisible();
-    await expect(errorMessage).toContainText(/already registered|exists/i);
   });
 
   // --- NAVIGATION EDGE CASES ---
@@ -164,4 +125,50 @@ test.describe('Edge Cases', () => {
     await expect(cartCount).toHaveText('1');
   });
 
+  // runExtraChallengeTests(test)
 });
+
+/**
+ * Runs additional tests for research and extra challenge purpose
+ * @param {typeof import('@playwright/test').test} test - Playwright test object
+ */
+function runExtraChallengeTests(test) {
+  test('should not allow checkout with empty cart', async ({ page }) => { // Takes more than 30+ seconds
+    // Go directly to checkout with empty cart
+    await page.goto('/checkout.html');
+
+    // Fill out the form
+    await page.locator('#firstName').fill('Test');
+    await page.locator('#lastName').fill('User');
+    await page.locator('#address').fill('123 Test St');
+    await page.locator('#city').fill('Testville');
+    await page.locator('#state').selectOption('MI');
+    await page.locator('#zip').fill('49501');
+    await page.locator('#phone').fill('555-0000');
+    await page.locator('#cardName').fill('Test User');
+    await page.locator('#cardNumber').fill('4111111111111111');
+    await page.locator('#expiry').fill('12/28');
+    await page.locator('#cvv').fill('123');
+
+    await page.locator('#placeOrderBtn').click();
+
+    // Should show error about empty cart
+    const toast = page.locator('#toast');
+    await expect(toast).toBeVisible();
+  });
+
+  test('should reject duplicate email registration', async ({ page }) => { // Takes more than 5+ seconds
+    await page.goto('/register.html');
+
+    // Try to register with the demo account email
+    await page.locator('#name').fill('Another User');
+    await page.locator('#email').fill('demo@techmart.com');
+    await page.locator('#password').fill('password123');
+    await page.locator('button[type="submit"]').click();
+
+    // Should show error about existing email
+    const errorMessage = page.locator('#errorMessage');
+    await expect(errorMessage).toBeVisible();
+    await expect(errorMessage).toContainText(/already registered|exists/i);
+  });
+}

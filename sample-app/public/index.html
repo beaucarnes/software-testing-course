@@ -64,11 +64,27 @@
   </main>
 
   <footer>
-    <p>&copy; 2024 TechMart. Demo store for testing purposes.</p>
+    <p>&copy; 0000 TechMart. Demo store for testing purposes.</p>
   </footer>
 
   <div id="toast" class="toast hidden"></div>
 
   <script src="app.js"></script>
+  <script defer>
+    const textNode = document.querySelector('footer p')
+
+      function setCurrentYear(node) {
+        if (!node || !node.textContent) return
+
+        const currentYear = new Date().getFullYear()
+        const updated = node.textContent.replace(/© \d{4}/, `© ${currentYear}`)
+
+        if (updated !== node.textContent) {
+          node.textContent = updated
+        }
+      }
+
+      setCurrentYear(textNode)
+</script>
 </body>
 </html>

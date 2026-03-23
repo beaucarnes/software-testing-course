@@ -104,4 +104,41 @@ test.describe('Homepage', () => {
     await expect(authArea.locator('text=Sign Up')).toBeVisible();
   });
 
+ runTestCasesFollowingTheVideoGuid(test) 
 });
+
+/**
+ * Run the test cases following the video guide
+ * @param {typeof import('@playwright/test').test} test - Playwright test object
+ */
+function runTestCasesFollowingTheVideoGuid(test) {
+  test(`Should filter products when searching`, async ({ page }) => {
+    const searchInput = page.locator(`#searchInput`)
+    await searchInput.fill('Keyboard')
+    await page.locator(`#searchBtn`).click()
+    await page.waitForTimeout(500)
+
+    const products = page.locator('.product-card')
+    await expect(products).toHaveCount(1)
+    await expect(page.locator('.product-info h3')).toContainText('Keyboard')
+    /**
+     * 
+     * Usual locators types
+     */
+    // By ID
+    page.locator('#searchInput')
+    // By class
+    page.locator('.product-card')
+    // By text content
+    page.locator('text=Add to Cart')
+    // By role (accessibility)
+    page.locator('role=button[name="Login"]')
+    // By placeholder
+    page.locator('[placeholder="Search products..."]')
+    // Combining selectors
+    page.locator('.product-card >> text=Add to Cart')
+    /**
+     * Recommendation: prefer locators that stable and meaningful
+     */
+  })
+}
