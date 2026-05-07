@@ -1,0 +1,157 @@
+name: Playwright Tests with Allure
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main, patch]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: sample-app/package-lock.json
+
+      - name: Install app dependencies
+        run: npm ci
+        working-directory: sample-app/
+
+  security:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: sample-app/package-lock.json
+
+      - name: SNYK Scan for App
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
+        with:
+          command: test
+          args: >
+            --severity-threshold=high
+            --file=sample-app/package.json
+            --json-file-output=snyk-app-results.json
+
+
+      - name: Snyk Scan - Test
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
+        with:
+          command: test
+          args: >
+            --severity-threshold=high
+            --file=tests/traditional/package.json
+            --json-file-output=snyk-test-results.json
+
+      - name: Upload Snky Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: snyk-results
+          path: |
+            snyk-app-results.json
+            snyk-test-results.json
+
+      - name: Snyk Monitor - App
+        uses: snyk/actions/node@master
+        if: github.ref == 'refs/heads/main'   # ← only track main branch
+        env:
+           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+          args: --file=sample-app/package.json
+            
+    
+  test:
+    runs-on: ubuntu-latest
+    needs: build 
+    defaults:
+      run:
+        working-directory: tests/traditional   # ← sets default for ALL steps in this job
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'npm'
+          cache-dependency-path: tests/traditional/package-lock.json
+
+      - name: Install test dependencies
+        run: npm ci
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+         path: ~/.cache/ms-playwright
+         key: playwright-${{ runner.os }}-${{ hashFiles('tests/traditional/package-lock.json') }}
+
+          
+      - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps
+
+      - name: Install system dependencies only (cache hit)
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps
+
+        
+      - name: Get Allure history
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Copy Allure history
+        run: |
+          mkdir -p allure-results/history
+          cp -r gh-pages/history/* allure-results/history || true
+
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      - name: Generate Allure Report
+        run: npx allure generate allure-results --clean -o allure-report
+
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: tests/traditional/allure-report  # ← must be repo-relative, not job-relative
+
+      - name: Deploy Allure Report to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: tests/traditional/allure-report  # ← same here

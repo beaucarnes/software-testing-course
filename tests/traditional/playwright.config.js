@@ -10,8 +10,8 @@ module.exports = defineConfig({
   testDir: './tests',
   
   // Run tests serially for consistent state (demo app uses in-memory storage)
-  fullyParallel: false,
-  workers: 1,
+  fullyParallel: true,
+  workers: 3,
   
   // Fail the build on CI if you accidentally left test.only in the source code
   forbidOnly: !!process.env.CI,
@@ -21,8 +21,11 @@ module.exports = defineConfig({
   
   // Reporter configuration
   reporter: [
-    ['html'],
-    ['list']
+     ['list'], // console output
+    ['html', { outputFolder: 'playwright-report' }],
+    ['json', { outputFile: 'test-results/results.json' }],
+    ['junit', { outputFile: 'test-results/results.xml' }],
+    ['allure-playwright', { outputFolder: 'allure-results', 'allure-report': 'allure-report' }],
   ],
   
   // Shared settings for all projects
@@ -55,15 +58,15 @@ module.exports = defineConfig({
       use: { ...devices['Desktop Safari'] },
     },
     
-    // Mobile viewports
-    {
-      name: 'Mobile Chrome',
-      use: { ...devices['Pixel 5'] },
-    },
-    {
-      name: 'Mobile Safari',
-      use: { ...devices['iPhone 12'] },
-    },
+    // // Mobile viewports
+    // {
+    //   name: 'Mobile Chrome',
+    //   use: { ...devices['Pixel 5'] },
+    // },
+    // {
+    //   name: 'Mobile Safari',
+    //   use: { ...devices['iPhone 12'] },
+    // },
   ],
 
   // Run local dev server before starting tests

@@ -142,6 +142,15 @@
         const response = await fetch('/api/cart');
         const data = await response.json();
         
+     /*   if (data.items.length === 0) {
+          // Show warning but allow form interaction - checkout API will handle the error
+          const errorDiv = document.getElementById('errorMessage');
+          errorDiv.textContent = 'Your cart is empty. You can still fill the form, but checkout will fail.';
+          errorDiv.classList.remove('hidden');
+          return;
+        } */
+
+        // Redirect to cart if empty to prevent checkout with no items
         if (data.items.length === 0) {
           window.location.href = '/cart.html';
           return;
@@ -210,6 +219,7 @@
         if (!response.ok) {
           errorDiv.textContent = data.error;
           errorDiv.classList.remove('hidden');
+          showToast(data.error, 'error');
           return;
         }
         
@@ -218,6 +228,7 @@
       } catch (error) {
         errorDiv.textContent = 'Network error. Please try again.';
         errorDiv.classList.remove('hidden');
+        showToast('Network error. Please try again.', 'error');
       }
     });
 

@@ -9,6 +9,9 @@
     "test:report": "playwright show-report"
   },
   "devDependencies": {
-    "@playwright/test": "^1.42.0"
+    "@axe-core/playwright": "^4.11.2",
+    "@playwright/test": "^1.59.1",
+    "allure-commandline": "^2.38.1",
+    "allure-playwright": "^3.7.2"
   }
 }

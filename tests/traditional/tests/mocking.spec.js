@@ -50,8 +50,8 @@ test.describe('Mocking API Responses', () => {
         status: 200,
         contentType: 'application/json',
         body: JSON.stringify([
-          { id: 1, name: 'Wireless Headphones', price: 79.99, category: 'electronics', image: 'headphones.svg', stock: 0 },
-          { id: 2, name: 'Mechanical Keyboard', price: 129.99, category: 'electronics', image: 'keyboard.svg', stock: 8 }
+          { id: 1, name: 'Mechanical Keyboard', price: 129.99, category: 'electronics', image: 'keyboard.svg', stock: 0 },
+          { id: 2, name: 'Wireless Headphones', price: 79.99, category: 'electronics', image: 'headphones.svg', stock: 8 }
         ])
       });
     });

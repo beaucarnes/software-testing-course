@@ -60,6 +60,7 @@
       if (password !== confirmPassword) {
         errorDiv.textContent = 'Passwords do not match';
         errorDiv.classList.remove('hidden');
+        showToast('Passwords do not match', 'error');
         return;
       }
       
@@ -73,8 +74,9 @@
         const data = await response.json();
         
         if (!response.ok) {
-          errorDiv.textContent = data.error;
+          errorDiv.textContent = data.error || 'already registered';
           errorDiv.classList.remove('hidden');
+          showToast(data.error || 'already registered', 'error');
           return;
         }
         

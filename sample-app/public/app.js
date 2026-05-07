@@ -221,12 +221,12 @@ function setupEventListeners() {
   const searchBtn = document.getElementById('searchBtn');
   if (searchInput && searchBtn) {
     searchBtn.addEventListener('click', () => {
-      currentFilters.search = searchInput.value;
+      currentFilters.search = searchInput.value.trim();
       loadProducts();
     });
     searchInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
-        currentFilters.search = searchInput.value;
+        currentFilters.search = searchInput.value.trim();
         loadProducts();
       }
     });

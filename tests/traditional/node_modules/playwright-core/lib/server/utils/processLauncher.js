@@ -46,11 +46,12 @@ async function gracefullyCloseAll() {
   await Promise.all(Array.from(gracefullyCloseSet).map((gracefullyClose) => gracefullyClose().catch((e) => {
   })));
 }
-function gracefullyProcessExitDoNotHang(code) {
-  setTimeout(() => process.exit(code), 3e4);
-  gracefullyCloseAll().then(() => {
-    process.exit(code);
-  });
+function gracefullyProcessExitDoNotHang(code, onExit) {
+  const beforeExit = onExit ? () => onExit().catch(() => {
+  }) : () => Promise.resolve();
+  const callback = () => beforeExit().then(() => process.exit(code));
+  setTimeout(callback, 3e4);
+  gracefullyCloseAll().then(callback);
 }
 function exitHandler() {
   for (const kill of killSet)
