@@ -34,7 +34,7 @@
         - 'slider "Max Price: $200" [ref=e23]': "200"
       - generic [ref=e24]:
         - generic [ref=e25]: "Sort by:"
-        - combobox "Sort by:" [active] [ref=e26]:
+        - combobox "Sort by:" [ref=e26]:
           - option "Name" [selected]
           - 'option "Price: Low to High"'
           - 'option "Price: High to Low"'
@@ -42,65 +42,53 @@
       - heading "Our Products" [level=2] [ref=e28]
       - generic [ref=e29]:
         - generic [ref=e30]:
-          - img "Mechanical Keyboard" [ref=e32]
+          - img "Wireless Headphones" [ref=e32]
           - generic [ref=e33]:
-            - heading "Mechanical Keyboard" [level=3] [ref=e34]
+            - heading "Wireless Headphones" [level=3] [ref=e34]
             - paragraph [ref=e35]: electronics
-            - paragraph [ref=e36]: $129.99
-            - paragraph [ref=e37]: 8 in stock
-            - generic [ref=e38]:
-              - button "Add to Cart" [ref=e39] [cursor=pointer]
-              - button "🤍 Add to Wishlist" [ref=e40] [cursor=pointer]
-        - generic [ref=e41]:
-          - img "Monitor Stand" [ref=e43]
-          - generic [ref=e44]:
-            - heading "Monitor Stand" [level=3] [ref=e45]
-            - paragraph [ref=e46]: accessories
-            - paragraph [ref=e47]: $89.99
-            - paragraph [ref=e48]: 12 in stock
-            - generic [ref=e49]:
-              - button "Add to Cart" [ref=e50] [cursor=pointer]
-              - button "🤍 Add to Wishlist" [ref=e51] [cursor=pointer]
-        - generic [ref=e52]:
-          - img "Mouse Pad XL" [ref=e54]
-          - generic [ref=e55]:
-            - heading "Mouse Pad XL" [level=3] [ref=e56]
-            - paragraph [ref=e57]: accessories
-            - paragraph [ref=e58]: $24.99
-            - paragraph [ref=e59]: 50 in stock
-            - generic [ref=e60]:
-              - button "Add to Cart" [ref=e61] [cursor=pointer]
-              - button "🤍 Add to Wishlist" [ref=e62] [cursor=pointer]
-        - generic [ref=e63]:
-          - img "USB-C Hub" [ref=e65]
-          - generic [ref=e66]:
-            - heading "USB-C Hub" [level=3] [ref=e67]
-            - paragraph [ref=e68]: electronics
-            - paragraph [ref=e69]: $49.99
-            - paragraph [ref=e70]: 25 in stock
-            - generic [ref=e71]:
-              - button "Add to Cart" [ref=e72] [cursor=pointer]
-              - button "🤍 Add to Wishlist" [ref=e73] [cursor=pointer]
-        - generic [ref=e74]:
-          - img "Webcam HD" [ref=e76]
-          - generic [ref=e77]:
-            - heading "Webcam HD" [level=3] [ref=e78]
-            - paragraph [ref=e79]: electronics
-            - paragraph [ref=e80]: $69.99
-            - paragraph [ref=e81]: 20 in stock
-            - generic [ref=e82]:
-              - button "Add to Cart" [ref=e83] [cursor=pointer]
-              - button "🤍 Add to Wishlist" [ref=e84] [cursor=pointer]
-        - generic [ref=e85]:
-          - img "Wireless Headphones" [ref=e87]
-          - generic [ref=e88]:
-            - heading "Wireless Headphones" [level=3] [ref=e89]
-            - paragraph [ref=e90]: electronics
-            - paragraph [ref=e91]: $79.99
-            - paragraph [ref=e92]: 15 in stock
-            - generic [ref=e93]:
-              - button "Add to Cart" [ref=e94] [cursor=pointer]
-              - button "🤍 Add to Wishlist" [ref=e95] [cursor=pointer]
-  - contentinfo [ref=e96]:
-    - paragraph [ref=e97]: © 2024 TechMart. Demo store for testing purposes.
+            - paragraph [ref=e36]: $79.99
+            - paragraph [ref=e37]: Only 3 left!
+            - button "Add to Cart" [ref=e38] [cursor=pointer]
+        - generic [ref=e39]:
+          - img "Mechanical Keyboard" [ref=e41]
+          - generic [ref=e42]:
+            - heading "Mechanical Keyboard" [level=3] [ref=e43]
+            - paragraph [ref=e44]: electronics
+            - paragraph [ref=e45]: $129.99
+            - paragraph [ref=e46]: 8 in stock
+            - button "Add to Cart" [ref=e47] [cursor=pointer]
+        - generic [ref=e48]:
+          - img "USB-C Hub" [ref=e50]
+          - generic [ref=e51]:
+            - heading "USB-C Hub" [level=3] [ref=e52]
+            - paragraph [ref=e53]: electronics
+            - paragraph [ref=e54]: $49.99
+            - paragraph [ref=e55]: 25 in stock
+            - button "Add to Cart" [ref=e56] [cursor=pointer]
+        - generic [ref=e57]:
+          - img "Monitor Stand" [ref=e59]
+          - generic [ref=e60]:
+            - heading "Monitor Stand" [level=3] [ref=e61]
+            - paragraph [ref=e62]: accessories
+            - paragraph [ref=e63]: $89.99
+            - paragraph [ref=e64]: 12 in stock
+            - button "Add to Cart" [ref=e65] [cursor=pointer]
+        - generic [ref=e66]:
+          - img "Webcam HD" [ref=e68]
+          - generic [ref=e69]:
+            - heading "Webcam HD" [level=3] [ref=e70]
+            - paragraph [ref=e71]: electronics
+            - paragraph [ref=e72]: $69.99
+            - paragraph [ref=e73]: 20 in stock
+            - button "Add to Cart" [ref=e74] [cursor=pointer]
+        - generic [ref=e75]:
+          - img "Mouse Pad XL" [ref=e77]
+          - generic [ref=e78]:
+            - heading "Mouse Pad XL" [level=3] [ref=e79]
+            - paragraph [ref=e80]: accessories
+            - paragraph [ref=e81]: $24.99
+            - paragraph [ref=e82]: 50 in stock
+            - button "Add to Cart" [active] [ref=e83] [cursor=pointer]
+  - contentinfo [ref=e84]:
+    - paragraph [ref=e85]: © 2024 TechMart. Demo store for testing purposes.
 ```

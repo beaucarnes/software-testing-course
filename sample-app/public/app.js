@@ -6,7 +6,7 @@ let currentFilters = {
   category: 'all',
   maxPrice: 200,
   search: '',
-  sort: 'name'
+  sort: ''
 };
 
 // Initialize the app
@@ -43,6 +43,11 @@ async function loadProducts() {
 
 // Sort products based on current filter
 function sortProducts() {
+  // If no sort option is set, preserve the order returned by the API.
+  if (!currentFilters.sort) {
+    return;
+  }
+
   switch (currentFilters.sort) {
     case 'price-low':
       products.sort((a, b) => a.price - b.price);
@@ -51,8 +56,13 @@ function sortProducts() {
       products.sort((a, b) => b.price - a.price);
       break;
     case 'name':
-    default:
+      // Explicit name sorting when requested.
       products.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+    default:
+      // Fallback to name sorting.
+      products.sort((a, b) => a.name.localeCompare(b.name));
+      break;
   }
 }
 
@@ -221,12 +231,13 @@ function setupEventListeners() {
   const searchBtn = document.getElementById('searchBtn');
   if (searchInput && searchBtn) {
     searchBtn.addEventListener('click', () => {
-      currentFilters.search = searchInput.value;
+      currentFilters.search = searchInput.value.trim();
       loadProducts();
     });
     searchInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
-        currentFilters.search = searchInput.value;
+        const query = searchInput.value.trim();
+        currentFilters.search = query;
         loadProducts();
       }
     });
