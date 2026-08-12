@@ -1,0 +1,11 @@
+{
+  "name": "techmart-testing",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "npx playwright test"
+  },
+  "devDependencies": {
+    "playwright": "^1.40.0"
+  }
+}

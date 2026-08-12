@@ -204,12 +204,12 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ shipping })
         });
-        
+
         const data = await response.json();
-        
+
         if (!response.ok) {
-          errorDiv.textContent = data.error;
-          errorDiv.classList.remove('hidden');
+          // Show error as toast instead of inline error message
+          showToast(data.error, 'error');
           return;
         }
         

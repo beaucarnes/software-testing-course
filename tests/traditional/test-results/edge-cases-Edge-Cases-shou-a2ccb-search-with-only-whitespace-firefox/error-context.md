@@ -1,0 +1,46 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "🛒 TechMart" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - textbox "Search products" [ref=e6]:
+          - /placeholder: Search products...
+        - button "Search" [active] [ref=e7] [cursor=pointer]: 🔍
+      - generic [ref=e8]:
+        - link "🛒 Cart (0)" [ref=e9] [cursor=pointer]:
+          - /url: /cart.html
+        - generic [ref=e10]:
+          - link "Login" [ref=e11] [cursor=pointer]:
+            - /url: /login.html
+          - link "Sign Up" [ref=e12] [cursor=pointer]:
+            - /url: /register.html
+  - main [ref=e13]:
+    - generic [ref=e14]:
+      - heading "Welcome to TechMart" [level=1] [ref=e15]
+      - paragraph [ref=e16]: Find the best tech accessories for your setup
+    - generic [ref=e17]:
+      - generic [ref=e18]:
+        - generic [ref=e19]: "Category:"
+        - combobox "Category:" [ref=e20]:
+          - option "All Categories" [selected]
+          - option "Electronics"
+          - option "Accessories"
+      - generic [ref=e21]:
+        - generic [ref=e22]: "Max Price: $200"
+        - 'slider "Max Price: $200" [ref=e23]': "200"
+      - generic [ref=e24]:
+        - generic [ref=e25]: "Sort by:"
+        - combobox "Sort by:" [ref=e26]:
+          - option "Name" [selected]
+          - 'option "Price: Low to High"'
+          - 'option "Price: High to Low"'
+    - generic [ref=e27]:
+      - heading "Our Products" [level=2] [ref=e28]
+      - paragraph [ref=e30]: No products found matching your criteria.
+  - contentinfo [ref=e31]:
+    - paragraph [ref=e32]: © 2024 TechMart. Demo store for testing purposes.
+```
