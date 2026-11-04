@@ -9,6 +9,7 @@ This folder contains the complete formal requirement specifications and agile us
 | [**`business-requirements.md`**](./business-requirements.md) | BRD / SRS | Comprehensive Business Requirements Document & Software Requirements Specification. Contains business goals, operational rules, functional requirements (`FR-*`), and non-functional requirements (`NFR-*`). |
 | [**`user-stories.md`**](./user-stories.md) | Agile User Stories | Persona definitions, 5 Epics, 17 User Stories (`US-*`) with Gherkin acceptance criteria (`Given - When - Then`) and traceability mappings. |
 | [**`test-cases/`**](./test-cases/) | E2E Test Cases | 29 detailed test cases formatted to standard QA templates, categorized across 6 module directories (`catalog/`, `cart/`, `auth/`, `checkout/`, `accessibility/`, `edge-cases/`). |
+| [**`test-scripts/`**](./test-scripts/) | Playwright Automation Tests | Automated test suite implementation using Page Object Model (POM), Playwright auto-waiting, resilient locators, Trace Viewer, and video on failure. All 29 tests verified passing. |
 
 ---
 

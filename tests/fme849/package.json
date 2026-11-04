@@ -1,0 +1,15 @@
+{
+  "name": "techmart-fme849-tests",
+  "version": "1.0.0",
+  "description": "Automated E2E Playwright test suite for TechMart (fme849)",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
+    "@playwright/test": "^1.58.2"
+  }
+}
